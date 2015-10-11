@@ -6,19 +6,30 @@ namespace RecognitionOfDrivingLicenses.Filters
 {
     public class AdaptiveBinarizatoinFilter: IBinarization
     {
-        public Bitmap GetBinaryImage(Bitmap bmp)
+        public Bitmap GetBinaryImage(Bitmap bitmap, ProgressDelegate progressDelegate)
         {
-            var result = new Bitmap(bmp.Width, bmp.Height);
-            var bytes = FilterHelper.BitmapToArray(bmp);
+            var result = new Bitmap(bitmap.Width, bitmap.Height);
+            var bytes = FilterHelper.BitmapToArray(bitmap);
+            
+            var iterationProgress = (double)50 / (bitmap.Width * bitmap.Height);
+            var innerIterationProgress = (double)50 / (bitmap.Width * bitmap.Height);
+            double progress = 0;
 
-            for (var i = 0; i < bmp.Width; i++)
+            for (var i = 0; i < bitmap.Width; i++)
             {
-                for (var j = 0; j < bmp.Height; j++)
+                for (var j = 0; j < bitmap.Height; j++)
                 {
                     var pixel = bytes[i, j];
                     var pixelIntensity = SurroundedValue(i, j, bytes);
 
+                    progress += innerIterationProgress;
+                    ProgressBarHelper.UpdateProgresssBar(progress, progressDelegate);
+
                     result.SetPixel(i, j, pixel > pixelIntensity - 5 ? Color.White : Color.Black);
+                    
+                    progress += iterationProgress;
+
+                    ProgressBarHelper.UpdateProgresssBar(progress, progressDelegate);
                 }
             }
 

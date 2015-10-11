@@ -8,9 +8,8 @@ namespace RecognitionOfDrivingLicenses.Filters
 {
     public class GausFilter: IFilter
     {
-        public Bitmap GetFilteredImage(Bitmap bmp, int size)
+        public Bitmap GetFilteredImage(Bitmap bitmap, int size, ProgressDelegate progressDelegate)
         {
-
             if (size % 2 == 0)
             {
                 size++;
@@ -61,14 +60,17 @@ namespace RecognitionOfDrivingLicenses.Filters
                 }
             }
 
-            var dst = new Bitmap(bmp);
+            var dst = new Bitmap(bitmap);
 
             int xLength = matrix.GetLength(0) / 2;
             int yLength = matrix.GetLength(1) / 2;
 
-            for (int i = xLength; i < bmp.Width - xLength; i++)
+            var iterationProgress = (double)100/(bitmap.Width*bitmap.Height);
+            double progress = 0;
+
+            for (int i = xLength; i < bitmap.Width - xLength; i++)
             {
-                for (int j = yLength; j < bmp.Height - yLength; j++)
+                for (int j = yLength; j < bitmap.Height - yLength; j++)
                 {
                     int red = 0, green = 0, blue = 0;
 
@@ -76,7 +78,7 @@ namespace RecognitionOfDrivingLicenses.Filters
                     {
                         for (int jj = -yLength; jj < yLength + 1; jj++)
                         {
-                            var pixel = bmp.GetPixel(i + ii, j + jj);
+                            var pixel = bitmap.GetPixel(i + ii, j + jj);
                             red += (int)(pixel.R * matrix[ii + xLength, jj + yLength]);
                             green += (int)(pixel.G * matrix[ii + xLength, jj + yLength]);
                             blue += (int)(pixel.B * matrix[ii + xLength, jj + yLength]);
@@ -87,8 +89,12 @@ namespace RecognitionOfDrivingLicenses.Filters
                     green = (int)(green / sum);
                     blue = (int)(blue / sum);
 
-                    var color = Color.FromArgb(bmp.GetPixel(i, j).A, FilterHelper.SetColor(red), FilterHelper.SetColor(green), FilterHelper.SetColor(blue));
+                    var color = Color.FromArgb(bitmap.GetPixel(i, j).A, FilterHelper.SetColor(red), FilterHelper.SetColor(green), FilterHelper.SetColor(blue));
                     dst.SetPixel(i, j, color);
+
+                    progress += iterationProgress;
+
+                    ProgressBarHelper.UpdateProgresssBar(progress, progressDelegate);
                 }
             }
 

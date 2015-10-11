@@ -37,8 +37,9 @@
             this.btnOpenFile = new System.Windows.Forms.Button();
             this.btnMedianFilter = new System.Windows.Forms.Button();
             this.btnGausFilter = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblWindowSize = new System.Windows.Forms.Label();
             this.btnAdaptiveBinarization = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trbrfilterWndow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -68,7 +69,7 @@
             // 
             // trbrfilterWndow
             // 
-            this.trbrfilterWndow.Location = new System.Drawing.Point(12, 41);
+            this.trbrfilterWndow.Location = new System.Drawing.Point(12, 43);
             this.trbrfilterWndow.Maximum = 50;
             this.trbrfilterWndow.Name = "trbrfilterWndow";
             this.trbrfilterWndow.Size = new System.Drawing.Size(446, 45);
@@ -93,7 +94,7 @@
             // 
             // btnOpenFile
             // 
-            this.btnOpenFile.Location = new System.Drawing.Point(12, 579);
+            this.btnOpenFile.Location = new System.Drawing.Point(12, 608);
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(141, 23);
             this.btnOpenFile.TabIndex = 6;
@@ -121,14 +122,14 @@
             this.btnGausFilter.UseVisualStyleBackColor = true;
             this.btnGausFilter.Click += new System.EventHandler(this.btnGausFilter_Click);
             // 
-            // label1
+            // lblWindowSize
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(464, 41);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "label1";
+            this.lblWindowSize.AutoSize = true;
+            this.lblWindowSize.Location = new System.Drawing.Point(464, 52);
+            this.lblWindowSize.Name = "lblWindowSize";
+            this.lblWindowSize.Size = new System.Drawing.Size(27, 13);
+            this.lblWindowSize.TabIndex = 9;
+            this.lblWindowSize.Text = "Size";
             // 
             // btnAdaptiveBinarization
             // 
@@ -140,13 +141,21 @@
             this.btnAdaptiveBinarization.UseVisualStyleBackColor = true;
             this.btnAdaptiveBinarization.Click += new System.EventHandler(this.btnAdaptiveBinarization_Click);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(12, 579);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(1253, 23);
+            this.progressBar1.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1277, 609);
+            this.ClientSize = new System.Drawing.Size(1277, 642);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnAdaptiveBinarization);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblWindowSize);
             this.Controls.Add(this.btnGausFilter);
             this.Controls.Add(this.btnMedianFilter);
             this.Controls.Add(this.btnOpenFile);
@@ -174,8 +183,9 @@
         private System.Windows.Forms.Button btnOpenFile;
         private System.Windows.Forms.Button btnMedianFilter;
         private System.Windows.Forms.Button btnGausFilter;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblWindowSize;
         private System.Windows.Forms.Button btnAdaptiveBinarization;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

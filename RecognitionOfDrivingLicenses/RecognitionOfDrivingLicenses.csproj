@@ -70,10 +70,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Filters\GausFilter.cs" />
+    <Compile Include="Helpers\ProgressBarHelper.cs" />
     <Compile Include="Interfaces\IBinarization.cs" />
     <Compile Include="Interfaces\IFilter.cs" />
     <Compile Include="Filters\MedianFilter.cs" />
     <Compile Include="Helpers\FilterType.cs" />
+    <Compile Include="Helpers\ProgressDelegate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

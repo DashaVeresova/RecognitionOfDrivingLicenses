@@ -6,10 +6,13 @@ namespace RecognitionOfDrivingLicenses.Filters
 {
     public class BinarizationByOtsu: IBinarization
     {
-        public Bitmap GetBinaryImage(Bitmap bitmap)
+        public Bitmap GetBinaryImage(Bitmap bitmap, ProgressDelegate progressDelegate)
         {
             var initialBytes = FilterHelper.BitmapToArray(bitmap);
             var otsuThreshold = OtsuThreshold(initialBytes);
+
+            var iterationProgress = (double)100 / (bitmap.Width * bitmap.Height);
+            double progress = 0;
 
             for (var i = 0; i < initialBytes.GetLength(0); i++)
             {
@@ -23,6 +26,10 @@ namespace RecognitionOfDrivingLicenses.Filters
                     {
                         initialBytes[i, j] = 255;
                     }
+
+                    progress += iterationProgress;
+                    
+                    ProgressBarHelper.UpdateProgresssBar(progress, progressDelegate);
                 }
             }
 
