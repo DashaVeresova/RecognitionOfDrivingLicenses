@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using RecognitionOfDrivingLicenses.Helpers;
+using RecognitionOfDrivingLicenses.Interfaces;
 
-namespace RecognitionOfDrivingLicenses
+namespace RecognitionOfDrivingLicenses.Filters
 {
     public class GausFilter: IFilter
     {
@@ -62,7 +61,7 @@ namespace RecognitionOfDrivingLicenses
                 }
             }
 
-            Bitmap dst = new Bitmap(bmp);
+            var dst = new Bitmap(bmp);
 
             int xLength = matrix.GetLength(0) / 2;
             int yLength = matrix.GetLength(1) / 2;

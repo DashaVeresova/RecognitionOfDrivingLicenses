@@ -7,3 +7,12 @@ D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDri
 D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\obj\Debug\RecognitionOfDrivingLicenses.csproj.GenerateResource.Cache
 D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\obj\Debug\RecognitionOfDrivingLicenses.exe
 D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\obj\Debug\RecognitionOfDrivingLicenses.pdb
+D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\bin\Debug\Common.Logging.dll
+D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\bin\Debug\GithubNugetDistributor.exe
+D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\bin\Debug\Octokit.dll
+D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\bin\Debug\Spring.Rest.dll
+D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\bin\Debug\Spring.Social.Core.dll
+D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\bin\Debug\Spring.Rest.pdb
+D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\bin\Debug\Spring.Rest.xml
+D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\bin\Debug\Spring.Social.Core.pdb
+D:\Recognition Of Driving Licenses\RecognitionOfDrivingLicenses\RecognitionOfDrivingLicenses\bin\Debug\Spring.Social.Core.xml

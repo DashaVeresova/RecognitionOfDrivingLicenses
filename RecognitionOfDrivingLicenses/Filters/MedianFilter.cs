@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using RecognitionOfDrivingLicenses.Helpers;
+using RecognitionOfDrivingLicenses.Interfaces;
 
-namespace RecognitionOfDrivingLicenses
+namespace RecognitionOfDrivingLicenses.Filters
 {
-    public class MedianFilter : IFilter
+    public class MedianFilter: IFilter
     {
         public Bitmap GetFilteredImage(Bitmap bmp, int size = 1)
         {

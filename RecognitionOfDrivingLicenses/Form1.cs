@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 using System.Windows.Forms;
+using RecognitionOfDrivingLicenses.Filters;
+using RecognitionOfDrivingLicenses.Helpers;
+using RecognitionOfDrivingLicenses.Interfaces;
 
 namespace RecognitionOfDrivingLicenses
 {
@@ -16,62 +13,81 @@ namespace RecognitionOfDrivingLicenses
         public Form1()
         {
             InitializeComponent();
-            label1.Text = trackBar1.Value.ToString();
+            label1.Text = trbrfilterWndow.Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public Bitmap GetInitialBitmap()
+        {
+            var bitmap = new Bitmap(pictureBox1.Image);
+            return bitmap;
         }
 
         private void btnBinarization_Click(object sender, EventArgs e)
         {
-            var image = GetOriginalImage();
-
-            var binar = new BinarizationByOtsu();
-            var result = binar.GetFilteredImage(FilterHelper.BitmapToArray(new Bitmap(image)));
-
-            pictureBox2.Image = FilterHelper.ArrayToBitmap(result);
+            ApplyFilter(FilterType.BinarizationByOtsu);
         }
-
-        public Image GetOriginalImage()
-        {
-            return pictureBox1.Image;
-        }
-
+        
         private void btnOpenFile_Click(object sender, EventArgs e)
         {
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 pictureBox1.Image = new Bitmap(openFileDialog1.FileName);
             }
         }
 
         private void btnMedianFilter_Click(object sender, EventArgs e)
-        { 
-            var image = GetOriginalImage();
-            var median = new MedianFilter();
-            var result = median.GetFilteredImage(new Bitmap(image), trackBar1.Value);
-
-            pictureBox2.Image = result;
+        {
+            ApplyFilter(FilterType.Median);
         }
 
         private void btnGausFilter_Click(object sender, EventArgs e)
         {
-            var image = GetOriginalImage();
-
-            var gaus = new GausFilter();
-            var result = gaus.GetFilteredImage(new Bitmap(image), trackBar1.Value);
-
-            pictureBox2.Image = result;
+            ApplyFilter(FilterType.Gaus);
         }
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
-            label1.Text = trackBar1.Value.ToString();
+            label1.Text = trbrfilterWndow.Value.ToString(CultureInfo.InvariantCulture);
         }
 
         private void btnAdaptiveBinarization_Click(object sender, EventArgs e)
         {
-            var image = GetOriginalImage();
+            ApplyFilter(FilterType.AdaptiveBinarization);
+        }
 
-            var adaptive = new AdaptiveBinarizatoinFilter();
-            var result = adaptive.GetFilteredImage(new Bitmap(image));
+        private void ApplyFilter(FilterType filterType)
+        {
+            IFilter filter = null;
+            IBinarization binarization = null;
+
+            if (FilterType.AdaptiveBinarization == filterType)
+            {
+                binarization = new AdaptiveBinarizatoinFilter();
+            }
+            else if (FilterType.BinarizationByOtsu == filterType)
+            {
+                binarization = new BinarizationByOtsu();
+            }
+            else if (FilterType.Gaus == filterType)
+            {
+                filter = new GausFilter();
+            }
+            else if (FilterType.Median == filterType)
+            {
+                filter = new MedianFilter();
+            }
+
+            var bitmap = GetInitialBitmap();
+            Bitmap result = null;
+
+            if (filter != null)
+            {
+                result = filter.GetFilteredImage(bitmap, trbrfilterWndow.Value);
+            }
+            else if (binarization != null)
+            {
+                result = binarization.GetBinaryImage(bitmap);
+            }
 
             pictureBox2.Image = result;
         }
