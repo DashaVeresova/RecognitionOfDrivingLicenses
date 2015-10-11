@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Filters\AdaptiveBinarizatoinFilter.cs" />
     <Compile Include="Filters\BinarizationByOtsu.cs" />
+    <Compile Include="Filters\GrayFilter.cs" />
     <Compile Include="Helpers\FIlterHelper.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

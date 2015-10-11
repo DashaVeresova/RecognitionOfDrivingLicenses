@@ -44,6 +44,10 @@ namespace RecognitionOfDrivingLicenses
         {
             await ApplyFilterTask(FilterType.AdaptiveBinarization);
         }
+        private async void btnGrayImage_Click(object sender, EventArgs e)
+        {
+            await ApplyFilterTask(FilterType.Gray);
+        }
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
         {
@@ -57,7 +61,7 @@ namespace RecognitionOfDrivingLicenses
                 pictureBox1.Image = new Bitmap(openFileDialog1.FileName);
             }
         }
-        
+
         private Task ApplyFilterTask(FilterType filterType, int windowSize = 0)
         {
             try
@@ -96,6 +100,9 @@ namespace RecognitionOfDrivingLicenses
                 case FilterType.Median:
                     filter = new MedianFilter();
                     break;
+                case FilterType.Gray:
+                    filter = new GrayFilter();
+                    break;
             }
 
             var bitmap = GetInitialBitmap();
@@ -114,7 +121,7 @@ namespace RecognitionOfDrivingLicenses
             {
                 result = binarization.GetBinaryImage(bitmap, UpdateProgtessBar);
             }
-            
+
             Invoke(new ArgUtils.Action(delegate
             {
                 if (progressBar1.Value < 100)
@@ -127,13 +134,23 @@ namespace RecognitionOfDrivingLicenses
 
         private void UpdateProgtessBar(double progress)
         {
-            Invoke(new Action(delegate
+            try
             {
-                if (progress <= 100)
+                Invoke(new Action(delegate
                 {
-                    progressBar1.Value = (int)progress;
-                }
-            }));
+                    if (progress <= 100)
+                    {
+                        progressBar1.Value = (int)progress;
+                    }
+                }));
+            }
+            catch (Exception exception) { }
+
+        }
+
+        private void btnSwitchImage_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = pictureBox2.Image;
         }
     }
 }
