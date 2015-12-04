@@ -42,6 +42,8 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.btnGrayImage = new System.Windows.Forms.Button();
             this.btnSwitchImage = new System.Windows.Forms.Button();
+            this.bетDetect = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trbrfilterWndow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -172,11 +174,33 @@
             this.btnSwitchImage.UseVisualStyleBackColor = true;
             this.btnSwitchImage.Click += new System.EventHandler(this.btnSwitchImage_Click);
             // 
+            // bетDetect
+            // 
+            this.bетDetect.Location = new System.Drawing.Point(873, 12);
+            this.bетDetect.Name = "bетDetect";
+            this.bетDetect.Size = new System.Drawing.Size(75, 23);
+            this.bетDetect.TabIndex = 14;
+            this.bетDetect.Text = "Распознать";
+            this.bетDetect.UseVisualStyleBackColor = true;
+            this.bетDetect.Click += new System.EventHandler(this.bетDetect_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(668, 13);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1277, 612);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bетDetect);
             this.Controls.Add(this.btnSwitchImage);
             this.Controls.Add(this.btnGrayImage);
             this.Controls.Add(this.progressBar1);
@@ -215,6 +239,8 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button btnGrayImage;
         private System.Windows.Forms.Button btnSwitchImage;
+        private System.Windows.Forms.Button bетDetect;
+        private System.Windows.Forms.Button button1;
     }
 }
 

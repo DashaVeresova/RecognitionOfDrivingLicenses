@@ -34,8 +34,8 @@ namespace RecognitionOfDrivingLicenses.Helpers
 
             return bitmap;
         }
-        
-        private static byte CountLumin(Color color)
+
+        public static byte CountLumin(Color color)
         {
             var red = color.R;
             var green = color.G;

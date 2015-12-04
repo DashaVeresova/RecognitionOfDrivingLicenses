@@ -5,6 +5,6 @@ namespace RecognitionOfDrivingLicenses.Interfaces
 {
     public interface IBinarization
     {
-        Bitmap GetBinaryImage(Bitmap bitmap, ProgressDelegate progressDelegate = null); 
+        Bitmap GetBinaryImage(Bitmap bitmap);
     }
 }

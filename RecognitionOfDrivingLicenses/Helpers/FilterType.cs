@@ -7,5 +7,7 @@
         Gaus,
         Gray,
         Median,
+        Edge,
+        Sharpen
     }
 }
