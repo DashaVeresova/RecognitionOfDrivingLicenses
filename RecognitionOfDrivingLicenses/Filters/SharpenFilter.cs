@@ -15,6 +15,10 @@ namespace RecognitionOfDrivingLicenses.Filters
         public Bitmap GetFilteredImage(Bitmap bitmap)
         {
             var bytes = FilterHelper.BitmapToArray(bitmap);
+          //  var filterMatrix = new double[,]
+          //{ { -1,  0,  1, },
+          //        { -2,  0,  2, },
+          //        { -1,  0,  1, }, };
             var filterMatrix = new double[,]
             {
                 {0, -2, 0},

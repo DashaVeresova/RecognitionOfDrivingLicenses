@@ -8,6 +8,11 @@ using Common.Logging.Configuration;
 using RecognitionOfDrivingLicenses.Filters;
 using RecognitionOfDrivingLicenses.Helpers;
 using RecognitionOfDrivingLicenses.Interfaces;
+using Bsuir.Misoi.Core.Images.Implementation.Segmentation;
+using Bsuir.Misoi.Core.Images.Implementation;
+using Bsuir.Misoi.WebUI.Models;
+using Bsuir.Misoi.WebUI.Storage.Implementation;
+using System.Drawing.Imaging;
 
 namespace RecognitionOfDrivingLicenses
 {
@@ -99,13 +104,13 @@ namespace RecognitionOfDrivingLicenses
                     filter = new GausFilter(windowSize, false, UpdateProgtessBar);
                     break;
                 case FilterType.Median:
-                    filter = new MedianFilter(windowSize, false, UpdateProgtessBar);
+                    filter = new Filters.MedianFilter(windowSize, false, UpdateProgtessBar);
                     break;
                 case FilterType.Gray:
                     filter = new GrayFilter();
                     break;
                 case FilterType.Edge:
-                    filter = new EdgeFilter();
+                    filter = new Filters.EdgeFilter();
                     break;
                 case FilterType.Sharpen:
                     filter = new SharpenFilter();
@@ -165,21 +170,30 @@ namespace RecognitionOfDrivingLicenses
             var originalImage = new Bitmap(pictureBox1.Image);
 
             var image = pictureBox1.Image;
+            //await ApplyFilterTask(FilterType.BinarizationByOtsu);
+            //btnSwitchImage_Click(sender, e);
             await ApplyFilterTask(FilterType.Sharpen);
             btnSwitchImage_Click(sender, e);
+            //await ApplyFilterTask(FilterType.AdaptiveBinarization);
+            //btnSwitchImage_Click(sender, e);
+            //await ApplyFilterTask(FilterType.Median);
+            //btnSwitchImage_Click(sender, e);
             await ApplyFilterTask(FilterType.Edge);
+            btnSwitchImage_Click(sender, e);
+            //await ApplyFilterTask(FilterType.Median);
+            //btnSwitchImage_Click(sender, e);
             var filteredImage = new Bitmap(pictureBox2.Image);
             var bytes = FilterHelper.BitmapToArray(filteredImage);
 
             var imageHandler = new ImageHandler(originalImage, bytes);
             var rect = imageHandler.DetectionText(originalImage);
-            Bitmap tempImage = null;
-            if (rect.Width > 0 && rect.Height > 0)
-            {
-                //tempImage = filteredImage.Clone(rect, filteredImage.PixelFormat);
-                //imageHandler.Bitmap = tempImage;
-                //pictureBox1.Image = tempImage;
-            }
+            //Bitmap tempImage = null;
+            //if (rect.Width > 0 && rect.Height > 0)
+            //{
+            //    tempImage = filteredImage.Clone(rect, filteredImage.PixelFormat);
+            //    imageHandler.Bitmap = tempImage;
+            //    pictureBox1.Image = tempImage;
+            //}
 
             var histogram = imageHandler.CalculateLineHistogram();
             var borders = imageHandler.DeterminateYCoordinates(histogram);
@@ -191,19 +205,53 @@ namespace RecognitionOfDrivingLicenses
                 foreach (var frame in frames.Where(x => x.Width > 4))
                 {
                     graphics.DrawRectangle(pen, frame);
-                }
+                }               
                 pictureBox2.Image = image;
             }
 
-            pictureBox1.Image = originalImage;
+            pictureBox1.Image = filteredImage;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            var m = new MorphologicalFilter();
-            var b = new Bitmap(pictureBox1.Image);
-            var image = m.ApplyFilter(b, 1, 4);
-            pictureBox2.Image = image;
+            var imageDataProvider = new ImageDataProvider();
+            var imageFactory = new ImageFactory();
+
+            var convolutionFilter = new Bsuir.Misoi.Core.Images.Implementation.ConvolutionFilter();
+
+            var binarizationFilter = new BinarizationFilter();
+            var segmentationAlogithm = new SegmentationAlgorithm(binarizationFilter);
+            var findResultDrawer = new FindResultDrawer();
+
+            var _imageProcessorService = new ImageProcessorsService(convolutionFilter, segmentationAlogithm, findResultDrawer);
+
+            var _imageRepository = new ImageRepository(imageDataProvider, imageFactory);
+
+            var _imageUrlProvider = new ImageUrlProvider();
+
+            var bitmap = new Bitmap(pictureBox1.Image);
+            var iimage = new BitmapImage(bitmap);
+            var result = new ImageProcessorsResult();
+            var sourceImage = iimage;
+
+            var processResult = _imageProcessorService.ProcessImageAsync("Clip document", sourceImage).Result;
+            if (processResult.Successful)
+            {
+                result.Successful = true;
+                _imageRepository.SaveImageAsync(processResult.ProcessedImage).Wait();
+                result.ProcessedImageUrl = _imageUrlProvider.GetImageUrl(processResult.ProcessedImage.Name);
+                result.ProcessedImageName = processResult.ProcessedImage.Name;
+                result.SourceImageUrl = _imageUrlProvider.GetImageUrl(sourceImage.Name);
+                result.SourceImageName = sourceImage.Name;
+                pictureBox2.Image = new Bitmap(processResult.ProcessedImage.Name + ".jpg");
+            }
+            else
+            {
+                result.Successful = false;
+            }
+            // return result;
+
+
         }
     }
 }
